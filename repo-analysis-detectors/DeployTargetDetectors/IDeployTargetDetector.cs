@@ -12,6 +12,9 @@ namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnaly
     using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Base interface for deploy target detectors
+    /// </summary>
     public interface IDeployTargetDetector
     {
         /// <summary>

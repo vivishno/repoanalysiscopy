@@ -13,7 +13,7 @@ namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnaly
     using System.Collections.Generic;
 
     /// <summary>
-    /// Base interface for language detectors
+    /// Base interface for build target detectors
     /// </summary>
     public interface IBuildTargetDetector
     {
