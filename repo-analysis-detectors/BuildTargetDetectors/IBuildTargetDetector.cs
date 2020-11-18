@@ -1,15 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IBuildTargetDetector.cs" company="Microsoft Corporation">
-//   2012-2023, All rights reserved.
-// </copyright>
-// <summary>
-//    Defines the interface for Repo Build Detectors.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
 {
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
     using System.Collections.Generic;
 
     /// <summary>

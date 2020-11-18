@@ -1,19 +1,10 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BuildTargetDetectorBase.cs" company="Microsoft Corporation">
-//   2012-2023, All rights reserved.
-// </copyright>
-// <summary>
-//   Base class for Build Detector
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
 
     /// <summary>
     /// Base abstract class for build target detectors.
@@ -50,31 +41,6 @@ namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnaly
         public abstract List<BuildTargetSettings> GetBuildTargetSettings(TreeAnalysis treeAnalysis);
 
         /// <summary>
-        /// Finds parent directory name for the node from treeanalysis object.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns>Parent directory name</returns>
-        public string GetDirectoryPath(FileSystemTreeNode node)
-        {
-            return GetDirectoryPath(node.Path);
-        }
-
-        /// <summary>
-        /// Finds parent directory name for the node from treeanalysis object.
-        /// </summary>
-        /// <param name="nodePath"></param>
-        /// <returns>Parent directory name</returns>
-        public string GetDirectoryPath(string nodePath)
-        {
-            if (string.IsNullOrEmpty(Path.GetDirectoryName(nodePath)))
-            {
-                return ".";
-            }
-            string[] dirs = nodePath.Split('/');
-            return String.Join("/", dirs.Take(dirs.Length - 1));
-        }
-
-        /// <summary>
         /// Checks if first parameter node is an ancestor of second parameter node.
         /// </summary>
         /// <param name="ancestor"></param>
@@ -84,6 +50,21 @@ namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnaly
         {
             return (Path.GetDirectoryName(child.Path) + Path.DirectorySeparatorChar)
                 .Contains(Path.GetDirectoryName(ancestor.Path) + Path.DirectorySeparatorChar);
+        }
+
+        /// <summary>
+        /// Returns directory path for a string
+        /// </summary>
+        /// <param name="nodePath"></param>
+        /// <returns>Directory level path</returns>
+        public string GetDirectoryPathFromString(string nodePath)
+        {
+            if (string.IsNullOrEmpty(System.IO.Path.GetDirectoryName(nodePath)))
+            {
+                return ".";
+            }
+            string[] dirs = nodePath.Split('/');
+            return String.Join("/", dirs.Take(dirs.Length - 1));
         }
     }
 }

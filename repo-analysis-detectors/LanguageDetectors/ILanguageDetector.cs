@@ -1,17 +1,8 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ILanguageDetector.cs" company="Microsoft Corporation">
-//   2012-2023, All rights reserved.
-// </copyright>
-// <summary>
-//    Defines the interface for Repo Language Detectors.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.LanguageDetectors
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.LanguageDetectors
 {
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors;
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.DeployTargetDetectors;
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors;
+    using GitHub.Services.RepositoryAnalysis.Detectors.DeployTargetDetectors;
+    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
     using System.Collections.Generic;
 
     /// <summary>

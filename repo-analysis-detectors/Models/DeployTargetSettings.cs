@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DeployTargetSettings.cs" company="Microsoft Corporation">
-//   2012-2023, All rights reserved.
-// </copyright>
-// <summary>
-//   Defines the FileSystemTreeNode resource.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.Models
 {
     using System.Collections.Generic;
     using System.Linq;

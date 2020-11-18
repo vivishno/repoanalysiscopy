@@ -1,15 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DeployTargetDetectorBase.cs" company="Microsoft Corporation">
-//   2012-2023, All rights reserved.
-// </copyright>
-// <summary>
-//    Base class for deploy target detectors.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.DeployTargetDetectors
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.DeployTargetDetectors
 {
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -42,23 +33,13 @@ namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnaly
         public abstract List<DeployTargetSettings> GetDeployTargetSettings(TreeAnalysis treeAnalysis);
 
         /// <summary>
-        /// Finds parent directory name for the node from treeanalysis object.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns>Parent directory name</returns>
-        public string GetDirectoryPath(FileSystemTreeNode node)
-        {
-            return GetDirectoryPath(node.Path);
-        }
-
-        /// <summary>
-        /// Finds parent directory name for the node from treeanalysis object.
+        /// Returns directory path for a string
         /// </summary>
         /// <param name="nodePath"></param>
-        /// <returns>Parent directory name</returns>
-        public string GetDirectoryPath(string nodePath)
+        /// <returns>Directory level path</returns>
+        public string GetDirectoryPathFromString(string nodePath)
         {
-            if (string.IsNullOrEmpty(Path.GetDirectoryName(nodePath)))
+            if (string.IsNullOrEmpty(System.IO.Path.GetDirectoryName(nodePath)))
             {
                 return ".";
             }

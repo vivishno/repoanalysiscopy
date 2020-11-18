@@ -1,4 +1,4 @@
-﻿namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.Models
 {
     using System.Collections.Generic;
 

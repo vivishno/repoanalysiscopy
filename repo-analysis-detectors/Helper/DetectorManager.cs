@@ -1,14 +1,14 @@
-﻿namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Helpers
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.Helpers
 {
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.LanguageDetectors;
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.Services.RepositoryAnalysis.Detectors.LanguageDetectors;
+    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
     using System.Collections.Generic;
 
     /// <summary>
     /// Helper class.
     /// Has methods to import necessary resources particular to the detectors in this library.
     /// </summary>
-    public class DetectorHelper
+    public class DetectorManager
     {
         /// <summary>
         /// Returns instances of all language detctors implemented in this library.
