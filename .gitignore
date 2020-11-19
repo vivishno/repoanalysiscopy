@@ -2,8 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/repo-analysis-detectors/.vs
-/repo-analysis-detectors/obj
-/repo-analysis-detectors/bin
-/repo-analysis-detectors/repo-analysis-detectors.csproj.user
-/repo-analysis-detectors/packages
+/.vs
+/obj
+/bin
+/repo-analysis-detectors.csproj.user
+/packages
