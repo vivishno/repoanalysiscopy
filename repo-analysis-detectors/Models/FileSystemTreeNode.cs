@@ -37,5 +37,16 @@
             string[] dirs = nodePath.Split('/');
             return String.Join("/", dirs.Take(dirs.Length - 1));
         }
+
+        /// <summary>
+        /// Checks if current node is an ancestor of second parameter node.
+        /// </summary>
+        /// <param name="child"></param>
+        /// <returns>true if current node is indeed an ancestor of "child"</returns>
+        public bool IsAncestorOf(FileSystemTreeNode child)
+        {
+            return (System.IO.Path.GetDirectoryName(child.Path) + System.IO.Path.DirectorySeparatorChar)
+                .Contains(System.IO.Path.GetDirectoryName(this.Path) + System.IO.Path.DirectorySeparatorChar);
+        }
     }
 }

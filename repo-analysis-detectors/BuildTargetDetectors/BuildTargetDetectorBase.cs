@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using GitHub.Services.RepositoryAnalysis.Detectors.Models;
 
@@ -39,18 +38,6 @@
         /// <param name="treeAnalysis"></param>
         /// <returns>List of build target settings</returns>
         public abstract List<BuildTargetSettings> GetBuildTargetSettings(TreeAnalysis treeAnalysis);
-
-        /// <summary>
-        /// Checks if first parameter node is an ancestor of second parameter node.
-        /// </summary>
-        /// <param name="ancestor"></param>
-        /// <param name="child"></param>
-        /// <returns>true if "ancestor" is indeed an ancestor of "child"</returns>
-        public bool IsAncestor(FileSystemTreeNode ancestor, FileSystemTreeNode child)
-        {
-            return (Path.GetDirectoryName(child.Path) + Path.DirectorySeparatorChar)
-                .Contains(Path.GetDirectoryName(ancestor.Path) + Path.DirectorySeparatorChar);
-        }
 
         /// <summary>
         /// Returns directory path for a string
