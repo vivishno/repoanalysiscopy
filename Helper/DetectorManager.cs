@@ -14,7 +14,7 @@
         /// Returns instances of all language detctors implemented in this library.
         /// </summary>
         /// <returns>List of ILanguageDetector objects</returns>
-        public List<ILanguageDetector> ImportLanguageDetectors()
+        public List<ILanguageDetector> ListLanguageDetectors()
         {
             return new List<ILanguageDetector> { };
         }
@@ -23,7 +23,7 @@
         /// Returns list of file regexes used in the detectors, to get those files read during treeAnalysis.
         /// </summary>
         /// <returns>List of regex strings</returns>
-        public List<string> ImportFileToBeReadRegexes()
+        public List<string> ListPatternsForFilesToBeRead()
         {
             return new List<string> { Constants.PackageJsonFileName };
         }

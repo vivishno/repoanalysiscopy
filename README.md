@@ -1,7 +1,50 @@
 # repo-analysis-detectors
-Detectors for Repo Analysis service, consumed as part of PortalExtension service in AzureDevOps. The library is targeting `netstandard2.0` runtime.
+Detectors for Repo Analysis service, consumed as part of Repo Analysis service. The detectors allow repo analysis service to detect what `Language` the targeted repository is written in, what will you get after building the project in that repository (`BuildTarget`), and what Azure resource does it have affinity towards, if any (`DeployTarget`).
+
+## Get started
+
+### Terminologies
+
+- `Language` specifies what Language/Platform used in the repository. Currently we have support for following languages (present in repo analysis service already, not part of this library)
+    - docker
+    - node
+    - python
+    - dotnet
+    - dotnetcore
+
+- `BuildTarget` specifies what you get after building the project of particular `Language`. Following are the build targets already present in repo analysis service
+    - plain (node)
+    - gulp (node)
+    - grunt (node)
+    - aspnetcore (dotnetcore)
+    - worker (dotnetcore)
+    - console (dotnetcore)
+    - aspnet (dotnet)
+    - dotnetframeworklibrary (dotnet)
+    - dotnetframeworkconsole (dotnet)
+    - dotnetframeworkplain (dotnet)
+    - django (python)
+
+    Build target detectors in this library
+    - react (node)
+    - vue (node)
+
+- `DeployTarget` specifies which Azure resource the project in the repo shows affinity towards (for eg, existence of `host.json` indicates the project might be Azure Functions). Following are the deploy targets already present in repo analysis service
+    - azure:functions
+    - Azure:AKS:HelmChart
+
+### Pre-requisites
+
+The library is targeting `netstandard2.0` runtime, thus make sure to have .NET Core > 2.0 on your machine,
+
+### How to build?
+
+Open the solution in Visual studio (2019), and build the project. Or alternatively you can navigate to the root folder with csproj file and run `dotnet build` from command prompt.
 
 ## Contribute
+
+To add support for detection of new language, build target or deploy target, you will have to add detectors of respective type.
+Here's how you add those:
 
 ### Adding a language detector
 
