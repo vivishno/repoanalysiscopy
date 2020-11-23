@@ -37,7 +37,8 @@
                     return new List<IBuildTargetDetector>
                     {
                         new NodeReactBuildTargetDetector(),
-                        new NodeVueBuildTargetDetector()
+                        new NodeVueBuildTargetDetector(),
+                        new NodeAngularBuildTargetDetector()
                     };
             }
             return new List<IBuildTargetDetector> { };

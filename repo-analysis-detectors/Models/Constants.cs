@@ -99,5 +99,8 @@
         public const string SolutionDirectory = "solutionDirectory";
         public const string DotNetFrameworkPrefix = "net";
         public const string DotNetStandardPrefix = "netstandard";
+        public const string AngularBuildTargetName = "angular";
+        public const string AngularBuildArtifactPath = "dist";
+        public const string AngularPackageName = "@angular/core";
     }
 }

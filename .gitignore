@@ -3,7 +3,7 @@
 ################################################################################
 
 /.vs
-/obj
-/bin
-/repo-analysis-detectors.csproj.user
-/packages
+/repo-analysis-detectors/obj
+/repo-analysis-detectors/bin
+/repo-analysis-detectors/repo-analysis-detectors.csproj.user
+/repo-analysis-detectors/packages
