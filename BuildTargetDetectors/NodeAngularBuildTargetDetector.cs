@@ -1,7 +1,7 @@
-﻿namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
 {
     using System.Collections.Generic;
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
 
     /// <summary>
     /// Build target detector for Vue build target for Node projects
@@ -68,7 +68,7 @@
             foreach (var packageJsonNode in packageJsonNodes)
             {
                 if (HasAngularDependency(treeAnalysis.FilesContent[packageJsonNode.Path].ToObject<PackageJsonModel>()))
-                    AngularProjectFolders.Add(GetDirectoryPath(packageJsonNode));
+                    AngularProjectFolders.Add(packageJsonNode.GetDirectoryPath());
             }
         }
 
