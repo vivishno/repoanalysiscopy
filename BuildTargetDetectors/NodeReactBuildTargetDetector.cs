@@ -1,6 +1,6 @@
-﻿namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
 {
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
     using System.Collections.Generic;
 
     /// <summary>
@@ -55,20 +55,20 @@
         /// <returns>true on React build target detection, otherwise false</returns>
         public override bool IsBuildTargetDetected(TreeAnalysis treeAnalysis)
         {
-            FindAndAddReactProjectFolders(treeAnalysis);
+            PopulateReactProjectDirectories(treeAnalysis);
             if (ReactProjectFolders.Count > 0)
                 return true;
             return false;
         }
 
-        internal void FindAndAddReactProjectFolders(TreeAnalysis treeAnalysis)
+        internal void PopulateReactProjectDirectories(TreeAnalysis treeAnalysis)
         {
             List<FileSystemTreeNode> packageJsonNodes = new List<FileSystemTreeNode>(treeAnalysis.FilesInfo[Constants.PackageJsonFileName]);
 
             foreach (var packageJsonNode in packageJsonNodes)
             {
                 if (HasReactDependency(treeAnalysis.FilesContent[packageJsonNode.Path].ToObject<PackageJsonModel>()))
-                    ReactProjectFolders.Add(GetDirectoryPath(packageJsonNode));
+                    ReactProjectFolders.Add(packageJsonNode.GetDirectoryPath());
             }
         }
 

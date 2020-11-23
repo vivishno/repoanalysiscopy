@@ -1,7 +1,7 @@
-﻿namespace Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
+﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
 {
     using System.Collections.Generic;
-    using Microsoft.VisualStudio.PortalExtension.Server.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
 
     /// <summary>
     /// Build target detector for Vue build target for Node projects
@@ -55,20 +55,20 @@
         /// <returns>true on Vue build target detection, otherwise false</returns>
         public override bool IsBuildTargetDetected(TreeAnalysis treeAnalysis)
         {
-            FindAndAddVueProjectFolders(treeAnalysis);
+            PopulateVueProjectDirectories(treeAnalysis);
             if (VueProjectFolders.Count > 0)
                 return true;
             return false;
         }
 
-        internal void FindAndAddVueProjectFolders(TreeAnalysis treeAnalysis)
+        internal void PopulateVueProjectDirectories(TreeAnalysis treeAnalysis)
         {
             List<FileSystemTreeNode> packageJsonNodes = new List<FileSystemTreeNode>(treeAnalysis.FilesInfo[Constants.PackageJsonFileName]);
 
             foreach (var packageJsonNode in packageJsonNodes)
             {
                 if (HasVueDependency(treeAnalysis.FilesContent[packageJsonNode.Path].ToObject<PackageJsonModel>()))
-                    VueProjectFolders.Add(GetDirectoryPath(packageJsonNode));
+                    VueProjectFolders.Add(packageJsonNode.GetDirectoryPath());
             }
         }
 
