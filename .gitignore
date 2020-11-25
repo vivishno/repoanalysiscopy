@@ -7,3 +7,5 @@
 /repo-analysis-detectors/bin
 /repo-analysis-detectors/repo-analysis-detectors.csproj.user
 /repo-analysis-detectors/packages
+/repo-analysis-detectors.tests.project/bin
+/repo-analysis-detectors.tests.project/obj
