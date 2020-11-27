@@ -1,9 +1,9 @@
-﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
+﻿namespace GitHub.RepositoryAnalysis.Detectors.BuildTargetDetectors
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.RepositoryAnalysis.Detectors.Models;
 
     /// <summary>
     /// Base abstract class for build target detectors.

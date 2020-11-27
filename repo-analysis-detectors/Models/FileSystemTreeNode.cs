@@ -1,4 +1,4 @@
-﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.Models
+﻿namespace GitHub.RepositoryAnalysis.Detectors.Models
 {
     using System;
     using System.Linq;

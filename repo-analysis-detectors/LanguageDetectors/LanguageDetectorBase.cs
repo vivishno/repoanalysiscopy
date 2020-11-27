@@ -1,10 +1,10 @@
-﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.LanguageDetectors
+﻿namespace GitHub.RepositoryAnalysis.Detectors.LanguageDetectors
 {
     using System;
     using System.Collections.Generic;
-    using GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors;
-    using GitHub.Services.RepositoryAnalysis.Detectors.DeployTargetDetectors;
-    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.RepositoryAnalysis.Detectors.BuildTargetDetectors;
+    using GitHub.RepositoryAnalysis.Detectors.DeployTargetDetectors;
+    using GitHub.RepositoryAnalysis.Detectors.Models;
 
     /// <summary>
     /// Base detector abstract class for language detectors.
@@ -33,12 +33,41 @@
         {
             switch (Language)
             {
+                case Constants.PythonLanguageName:
+                    return new List<IBuildTargetDetector>
+                    {
+                        new PythonDjangoBuildTargetDetector(),
+                        new PythonPlainBuildTargetDetector()
+                    };
                 case Constants.NodeLanguageName:
                     return new List<IBuildTargetDetector>
                     {
+                        new NodeGulpBuildTargetDetector(),
+                        new NodeGruntBuildTargetDetector(),
+                        new NodePlainBuildTargetDetector(),
                         new NodeReactBuildTargetDetector(),
                         new NodeVueBuildTargetDetector(),
                         new NodeAngularBuildTargetDetector()
+                    };
+                case Constants.Docker:
+                    return new List<IBuildTargetDetector>
+                    {
+                        new DockerfileBuildTargetDetector(),
+                    };
+                case Constants.DotNetFramework:
+                    return new List<IBuildTargetDetector>
+                    {
+                        new DotNetFrameworkWebBuildTargetDetector(),
+                        new DotNetFrameworkConsoleBuildDetector(),
+                        new DotNetFrameworkLibraryBuildTargetDetector(),
+                        new DotNetFrameworkPlainBuildTargetDetector()
+                    };
+                case Constants.DotNetCore:
+                    return new List<IBuildTargetDetector>
+                    {
+                        new DotNetCoreWebBuildTargetDetector(),
+                        new DotNetCoreWorkerBuildTargetDetector(),
+                        new DotNetCoreConsoleBuildTargetDetector()
                     };
             }
             return new List<IBuildTargetDetector> { };
@@ -50,6 +79,24 @@
         /// <returns>List of IDeployTargetDetector objects</returns>
         public IList<IDeployTargetDetector> GetDeployTargetDetectors()
         {
+            switch (Language)
+            {
+                case Constants.PythonLanguageName:
+                    return new List<IDeployTargetDetector>
+                    {
+                        new AzureFunctionDeployTargetDetector()
+                    };
+                case Constants.NodeLanguageName:
+                    return new List<IDeployTargetDetector>
+                    {
+                        new AzureFunctionDeployTargetDetector()
+                    };
+                case Constants.Docker:
+                    return new List<IDeployTargetDetector>
+                    {
+                        new AKSHelmChartDetector()
+                    };
+            }
             return new List<IDeployTargetDetector> { };
         }
     }

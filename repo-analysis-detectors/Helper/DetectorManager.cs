@@ -1,7 +1,7 @@
-﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.Helpers
+﻿namespace GitHub.RepositoryAnalysis.Detectors.Helpers
 {
-    using GitHub.Services.RepositoryAnalysis.Detectors.LanguageDetectors;
-    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.RepositoryAnalysis.Detectors.LanguageDetectors;
+    using GitHub.RepositoryAnalysis.Detectors.Models;
     using System.Collections.Generic;
 
     /// <summary>
@@ -16,7 +16,13 @@
         /// <returns>List of ILanguageDetector objects</returns>
         public List<ILanguageDetector> ListLanguageDetectors()
         {
-            return new List<ILanguageDetector> { };
+            return new List<ILanguageDetector> {
+                new PythonLanguageDetector(),
+                new NodeLanguageDetector(),
+                new DockerDetector(),
+                new DotNetLanguageDetector(),
+                new DotNetCoreLanguageDetector()
+            };
         }
 
         /// <summary>
@@ -25,7 +31,7 @@
         /// <returns>List of regex strings</returns>
         public List<string> ListPatternsForFilesToBeRead()
         {
-            return new List<string> { Constants.PackageJsonFileName };
+            return new List<string> { Constants.PackageJsonFileName, Constants.CsProjDetectionRegex, Constants.GlobalJsonParseRegex, "^.*Dockerfile.*$" };
         }
     }
 }

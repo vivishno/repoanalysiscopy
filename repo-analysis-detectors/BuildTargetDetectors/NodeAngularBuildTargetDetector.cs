@@ -1,7 +1,7 @@
-﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors
+﻿namespace GitHub.RepositoryAnalysis.Detectors.BuildTargetDetectors
 {
     using System.Collections.Generic;
-    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.RepositoryAnalysis.Detectors.Models;
 
     /// <summary>
     /// Build target detector for Vue build target for Node projects

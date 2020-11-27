@@ -1,6 +1,6 @@
-﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.DeployTargetDetectors
+﻿namespace GitHub.RepositoryAnalysis.Detectors.DeployTargetDetectors
 {
-    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.RepositoryAnalysis.Detectors.Models;
     using System.Collections.Generic;
 
     /// <summary>

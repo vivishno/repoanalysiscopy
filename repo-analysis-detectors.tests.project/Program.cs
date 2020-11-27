@@ -3,12 +3,13 @@
     using repo_analysis_detectors.tests.project.Models;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
-    using GitHub.Services.RepositoryAnalysis.Detectors.LanguageDetectors;
+    using GitHub.RepositoryAnalysis.Detectors.Models;
+    using GitHub.RepositoryAnalysis.Detectors.LanguageDetectors;
     using System;
     using System.Linq;
-    using GitHub.Services.RepositoryAnalysis.Detectors.BuildTargetDetectors;
-    using GitHub.Services.RepositoryAnalysis.Detectors.DeployTargetDetectors;
+    using GitHub.RepositoryAnalysis.Detectors.BuildTargetDetectors;
+    using GitHub.RepositoryAnalysis.Detectors.DeployTargetDetectors;
+    using System.Text.Json;
 
     class Program
     {
@@ -31,13 +32,15 @@
 
             var treeAnalysis = await treeAnalysisService.GetTreeAnalysis(sourceRepository);
 
-            StartE2EFlow(treeAnalysis);
+            var results = StartE2EFlow(treeAnalysis);
+            Console.WriteLine(JsonSerializer.Serialize(results));
+            Console.ReadKey();
         }
 
         private static List<ApplicationSettings> StartE2EFlow(TreeAnalysis treeAnalysis)
         {
             List<ApplicationSettings> applicationSettingsList = new List<ApplicationSettings>();
-            IReadOnlyList<ILanguageDetector> languageDetectors = GetLanguageDetectors(); // will be empty, as there are none
+            IReadOnlyList<ILanguageDetector> languageDetectors = GetLanguageDetectors();
 
             foreach (var detector in languageDetectors)
             {
@@ -55,9 +58,58 @@
             return applicationSettingsList;
         }
 
-        private static List<ApplicationSettings> GetApplicationSettings(string language, IList<BuildTargetSettings> buildTargetSettingsList, IList<DeployTargetSettings> deployTargetSettingsList)
+        public static List<ApplicationSettings> GetApplicationSettings(string language, IList<BuildTargetSettings> buildSettingsList, IList<DeployTargetSettings> deploySettingsList)
         {
-            throw new NotImplementedException();
+            List<ApplicationSettings> languageAnalysisList = new List<ApplicationSettings>();
+            if (buildSettingsList.Count == 0 && deploySettingsList.Count > 0)
+            {
+                ApplicationSettings applicationAnalysis = new ApplicationSettings();
+                applicationAnalysis.Language = language;
+                foreach (DeployTargetSettings deploySettings in deploySettingsList)
+                {
+                    applicationAnalysis.DeployTargetName = deploySettings.Name;
+                    applicationAnalysis.Settings = deploySettings.GetNonNullSettings();
+                    languageAnalysisList.Add(applicationAnalysis);
+                }
+            }
+            else
+            {
+                foreach (BuildTargetSettings buildSettings in buildSettingsList)
+                {
+                    bool matchingDeploySettingFound = false;
+                    foreach (DeployTargetSettings deploySettings in deploySettingsList)
+                    {
+                        ApplicationSettings languageAnalysis = getBuildLanguageAnalysis(buildSettings, language);
+                        if (String.Equals(buildSettings.Settings[Constants.WorkingDirectory], deploySettings.Settings[Constants.WorkingDirectory]))
+                        {
+                            matchingDeploySettingFound = true;
+                            languageAnalysis.DeployTargetName = deploySettings.Name;
+                            foreach (KeyValuePair<string, object> entry in deploySettings.GetNonNullSettings())
+                            {
+                                if (!languageAnalysis.Settings.ContainsKey(entry.Key))
+                                {
+                                    languageAnalysis.Settings[entry.Key] = entry.Value;
+                                }
+                            }
+                            languageAnalysisList.Add(languageAnalysis);
+                        }
+                    }
+                    if (!matchingDeploySettingFound)
+                    {
+                        languageAnalysisList.Add(getBuildLanguageAnalysis(buildSettings, language));
+                    }
+                }
+            }
+            return languageAnalysisList;
+        }
+
+        private static ApplicationSettings getBuildLanguageAnalysis(BuildTargetSettings buildSettings, string Language)
+        {
+            ApplicationSettings languageAnalysis = new ApplicationSettings();
+            languageAnalysis.Language = Language;
+            languageAnalysis.BuildTargetName = buildSettings.Name;
+            languageAnalysis.Settings = buildSettings.GetNonNullSettings();
+            return languageAnalysis;
         }
 
         private static IList<BuildTargetSettings> GetBuildTargetSettingsList(ILanguageDetector languageDetector, TreeAnalysis treeAnalysis)
@@ -95,7 +147,7 @@
         private static List<ILanguageDetector> GetLanguageDetectors()
         {
             var type = typeof(LanguageDetectorBase);
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => type.IsAssignableFrom(p));
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => type.IsAssignableFrom(p) && !p.IsAbstract && !p.IsInterface);
             List<ILanguageDetector> languageDetectors = new List<ILanguageDetector>();
 
             foreach (var langType in types)

@@ -1,4 +1,4 @@
-﻿namespace GitHub.Services.RepositoryAnalysis.Detectors.Models
+﻿namespace GitHub.RepositoryAnalysis.Detectors.Models
 {
     public static class Constants
     {

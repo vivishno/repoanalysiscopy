@@ -1,17 +1,15 @@
 ﻿namespace repo_analysis_detectors.tests.project
 {
-    using GitHub.Services.RepositoryAnalysis.Detectors.Helpers;
-    using GitHub.Services.RepositoryAnalysis.Detectors.Models;
+    using GitHub.RepositoryAnalysis.Detectors.Helpers;
+    using GitHub.RepositoryAnalysis.Detectors.Models;
     using repo_analysis_detectors.tests.project.Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net.Http;
-    using System.Net.Http.Headers;
     using System.Text;
     using System.Text.Json;
-    using System.Text.Json.Serialization;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
@@ -108,12 +106,7 @@
         private async Task<string> GetFileContent(SourceRepository sourceRepository, string filePath)
         {
             string fileContentUrl = $"{baseUrl}/{sourceRepository.Repository.Id}/contents/{filePath}";
-            var resultTask = client.GetAsync(fileContentUrl);
-            var response = await resultTask;
-            Task<string> finalResult = Task.Run(() => response.Content.ReadAsStringAsync());
-            finalResult.Wait();
-
-            GitFileContent fileContent = JsonSerializer.Deserialize<GitFileContent>(finalResult.Result);
+            var fileContent = await GetHttpRequest<GitFileContent>(fileContentUrl, sourceRepository.Repository.AuthorizationInfo.Parameters["AccessToken"]);
 
             byte[] contentBytes = Convert.FromBase64String(fileContent.Content);
             string content = Encoding.UTF8.GetString(contentBytes);
@@ -123,14 +116,10 @@
 
         private async Task<IList<FileSystemTreeNode>> GetRepositoryTree(SourceRepository sourceRepository)
         {
-            string repoTreeUrl = $"{baseUrl}/{sourceRepository.Repository.Id}/git/trees/{sourceRepository.Repository.DefaultBranch}?recursive=1";
-            client.DefaultRequestHeaders.Add("Accept", "application/vnd.GitHub.V3+json");
-            client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.speedy-preview+json");
-            client.DefaultRequestHeaders.Add("Authorization", sourceRepository.Repository.AuthorizationInfo.Parameters["AccessToken"]);
-            client.DefaultRequestHeaders.Add("User-Agent", "repo-analysis-detectors.tests.project");
-            var resultTask = client.GetStreamAsync(repoTreeUrl);
-            var response = await JsonSerializer.DeserializeAsync<TreeResponse>(await resultTask);
             IList<FileSystemTreeNode> repositoryTree = new List<FileSystemTreeNode>();
+
+            string repoTreeUrl = $"{baseUrl}/{sourceRepository.Repository.Id}/git/trees/{sourceRepository.Repository.DefaultBranch}?recursive=1";
+            var response = await GetHttpRequest<TreeResponse>(repoTreeUrl, sourceRepository.Repository.AuthorizationInfo.Parameters["AccessToken"]);
 
             foreach (var node in response.Tree)
             {
@@ -138,6 +127,22 @@
             }
 
             return repositoryTree;
+        }
+
+        private async Task<T> GetHttpRequest<T>(string url, string accessToken) where T : class
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Accept", "application/vnd.GitHub.V3+json");
+                client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.speedy-preview+json");
+                client.DefaultRequestHeaders.Add("Authorization", accessToken);
+                client.DefaultRequestHeaders.Add("User-Agent", "repo-analysis-detectors.tests.project");
+
+                var resultTask = client.GetStreamAsync(url);
+                var response = await JsonSerializer.DeserializeAsync<T>(await resultTask);
+
+                return response;
+            }
         }
     }
 }
