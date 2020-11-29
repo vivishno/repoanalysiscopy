@@ -1,4 +1,4 @@
-﻿namespace repo_analysis_detectors.tests.project
+﻿namespace TestApp
 {
     using GitHub.RepositoryAnalysis.Detectors.Helpers;
     using GitHub.RepositoryAnalysis.Detectors.Models;
@@ -12,6 +12,7 @@
     using System.Text.Json;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using SourceRepository = Models.SourceRepository;
 
     public class TreeAnalysisService
     {
@@ -28,7 +29,7 @@
             return treeAnalysis;
         }
 
-        private async Task ConvertGitTreeToTreeAnalysis(IList<FileSystemTreeNode> repositoryTree,SourceRepository sourceRepository, TreeAnalysis treeAnalysis)
+        private async Task ConvertGitTreeToTreeAnalysis(IList<FileSystemTreeNode> repositoryTree, SourceRepository sourceRepository, TreeAnalysis treeAnalysis)
         {
             Dictionary<string, IList<FileSystemTreeNode>> fileInfo = new Dictionary<string, IList<FileSystemTreeNode>>(StringComparer.InvariantCultureIgnoreCase);
             Dictionary<string, IList<FileSystemTreeNode>> directoryInfo = new Dictionary<string, IList<FileSystemTreeNode>>(StringComparer.InvariantCultureIgnoreCase);
@@ -135,13 +136,19 @@
             {
                 client.DefaultRequestHeaders.Add("Accept", "application/vnd.GitHub.V3+json");
                 client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.speedy-preview+json");
-                client.DefaultRequestHeaders.Add("Authorization", accessToken);
-                client.DefaultRequestHeaders.Add("User-Agent", "repo-analysis-detectors.tests.project");
+                client.DefaultRequestHeaders.Add("Authorization", $"token {accessToken}");
+                client.DefaultRequestHeaders.Add("User-Agent", "TestApp");
 
-                var resultTask = client.GetStreamAsync(url);
-                var response = await JsonSerializer.DeserializeAsync<T>(await resultTask);
-
-                return response;
+                try
+                {
+                    var resultTask = client.GetStreamAsync(url);
+                    var response = await JsonSerializer.DeserializeAsync<T>(await resultTask);
+                    return response;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
     }

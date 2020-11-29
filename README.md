@@ -39,7 +39,52 @@ The library is targeting `netstandard2.0` runtime, thus make sure to have .NET C
 
 ### How to build?
 
-Open the solution in Visual studio (2019), and build the project. Or alternatively you can navigate to the root folder with csproj file and run `dotnet build` from command prompt.
+Open the solution in Visual studio (2019), and build the project. Or alternatively you can navigate to the root folder with csproj file for Detectors project and run `dotnet build` from command prompt.
+
+### How to run this project?
+
+`Detectors` project by itself is a library, thus cannot be ran on its own. Thus we have added `TestApp`, a .NET Core web app, which will consume the `Detectors` library and use it similar to the way it will be used in the Repo analysis service.
+
+- Build `TestApp` from Visual studio (2019) or command prompt (dotnet build), and run the project.
+- This will create a server at `http://localhost:40040`.
+- Hit `http://localhost:40040/TestRepositorAnalysis` with following payload:
+
+```
+{
+  "Repository":
+  {
+    "Id": "<GithubUsername>/<RepoName>", // for eg, NinadKavimandan/dotnetted
+    "Type": "Github", // this stays the same
+    "DefaultBranch": "master", // newer repos will have main instead of master branch, so be mindful of that
+    "AuthorizationInfo":{
+      "Scheme":"Token", //  this stays the same
+      "Parameters":{
+        "AccessToken":"<YOUR_GITHUB_PAT>" // make sure the PAT has repo level access
+      }
+    }
+  }
+}
+```
+- You will get an output of following schema:
+
+```
+
+{
+    "applicationSettingsList": [
+        {
+            "language": "<LanguageDetected>",
+            "buildTargetName": "<BuildTargetDetected>",
+            "deployTargetName": <DeployTargetDetected>,
+            "settings": {
+                "workingDirectory": "<Directory where there targets were detected>",
+                ... detector particular settings
+            }
+        },
+        ...
+    ]
+}
+
+```
 
 ## Contribute
 
@@ -107,3 +152,7 @@ public IList<IBuildTargetDetector> GetBuildTargetDetectors()
 - `IsDeployTargetDetected()` - This is where your deploy target detection logic goes. This method takes a `TreeAnalysis` object as input and returns true if the detection criteria are met for a given deploy target.
 
 - `GetDeployTargetSettings()` - Once the deploy target is detected, this method is called to generate the settings required while deploying the project from the repository to the detected deploy resource/target. This method also takes a `TreeAnalysis` object as input, and returns a list of `DeployTargetSettings` objects. `WorkingDirectory` is a mandatory setting and used as a key to map `DeployTargetSettings` with the `BuildTargetSettings`.
+
+### How to test your changes?
+
+Once you had added the detectors and added their instances to necessary functions as directed above, you just have to follow [How to run](#how-to-run-this-project)

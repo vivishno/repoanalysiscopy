@@ -3,9 +3,11 @@
 ################################################################################
 
 /.vs
-/repo-analysis-detectors/obj
-/repo-analysis-detectors/bin
-/repo-analysis-detectors/repo-analysis-detectors.csproj.user
-/repo-analysis-detectors/packages
-/repo-analysis-detectors.tests.project/bin
-/repo-analysis-detectors.tests.project/obj
+/bin
+/obj
+/Detectors/obj
+/Detectors/bin
+/Detectors/repo-analysis-detectors.csproj.user
+/Detectors/packages
+/TestApp/bin
+/TestApp/obj
