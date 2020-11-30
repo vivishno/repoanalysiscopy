@@ -47,7 +47,7 @@ Open the solution in Visual studio (2019), and build the project. Or alternative
 
 - Build `TestApp` from Visual studio (2019) or command prompt (dotnet build), and run the project.
 - This will create a server at `http://localhost:40040`.
-- Hit `http://localhost:40040/TestRepositorAnalysis` with following payload:
+- Make HttpPost request to `http://localhost:40040/TestRepositorAnalysis` with following payload:
 
 ```
 {
