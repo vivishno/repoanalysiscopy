@@ -2,7 +2,6 @@
 {
     using GitHub.RepositoryAnalysis.Detectors.Helpers;
     using GitHub.RepositoryAnalysis.Detectors.Models;
-    using repo_analysis_detectors.tests.project.Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -12,6 +11,7 @@
     using System.Text.Json;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using TestApp.Models;
     using SourceRepository = Models.SourceRepository;
 
     public class TreeAnalysisService

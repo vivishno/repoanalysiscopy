@@ -1,4 +1,4 @@
-﻿namespace repo_analysis_detectors.tests.project.Models
+﻿namespace TestApp.Models
 {
     using System.Text.Json.Serialization;
 
