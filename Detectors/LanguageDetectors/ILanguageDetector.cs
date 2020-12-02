@@ -1,9 +1,6 @@
 ﻿namespace GitHub.RepositoryAnalysis.Detectors.LanguageDetectors
 {
-    using GitHub.RepositoryAnalysis.Detectors.BuildTargetDetectors;
-    using GitHub.RepositoryAnalysis.Detectors.DeployTargetDetectors;
     using GitHub.RepositoryAnalysis.Detectors.Models;
-    using Microsoft.VisualStudio.Services.PortalExtension.RepositoryAnalysis.WebApi.Contracts;
     using System.Collections.Generic;
 
     /// <summary>

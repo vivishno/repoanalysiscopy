@@ -5,7 +5,6 @@
     using GitHub.RepositoryAnalysis.Detectors.BuildTargetDetectors;
     using GitHub.RepositoryAnalysis.Detectors.DeployTargetDetectors;
     using GitHub.RepositoryAnalysis.Detectors.Models;
-    using Microsoft.VisualStudio.Services.PortalExtension.RepositoryAnalysis.WebApi.Contracts;
 
     /// <summary>
     /// Base detector abstract class for language detectors.

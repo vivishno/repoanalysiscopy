@@ -1,8 +1,8 @@
 ﻿namespace TestApp
 {
     using System.Threading.Tasks;
+    using GitHub.RepositoryAnalysis.Detectors.Models;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.VisualStudio.Services.PortalExtension.RepositoryAnalysis.WebApi.Contracts;
     using SourceRepository = Models.SourceRepository;
 
     [ApiController]

@@ -6,7 +6,6 @@
     using System.Threading.Tasks;
     using GitHub.RepositoryAnalysis.Detectors.LanguageDetectors;
     using GitHub.RepositoryAnalysis.Detectors.Models;
-    using Microsoft.VisualStudio.Services.PortalExtension.RepositoryAnalysis.WebApi.Contracts;
     using SourceRepository = Models.SourceRepository;
 
     public class RepositoryAnalysisService

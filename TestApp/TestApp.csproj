@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>TestApp</RootNamespace>
   </PropertyGroup>
-
+    
   <ItemGroup>
     <ProjectReference Include="..\Detectors\Detectors.csproj" />
   </ItemGroup>
